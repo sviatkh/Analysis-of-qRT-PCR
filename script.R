@@ -37,7 +37,7 @@ sample_group <- rbind(sample_group_1, sample_group_2, sample_group_3, sample_gro
 # new column with NA
 new_df$Group <- NA
 
-# loop through Sample and write corresponding Group to Sample
+# loop through Sample and write corresponding Group to Sample in new column
 for (i in 1:nrow(sample_group)) {
   new_df$Group[new_df$Sample %in% sample_group$sample_name[i]] <- sample_group$group_name[i]
 }
