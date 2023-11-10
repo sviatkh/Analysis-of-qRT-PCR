@@ -55,3 +55,5 @@ for (gene in genes) {
   print(gene)
   print(PostHocTest(cM.aov, method = "duncan")) 
 }
+
+# after a have to calculate the delta Ct
