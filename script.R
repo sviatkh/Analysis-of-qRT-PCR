@@ -47,8 +47,6 @@ ggplot(data, aes(Target, Ct, fill = Group)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
   
 
-
-
 # duncan test for all genes
 genes <- unique(data$Target) 
 for (gene in genes) {   
