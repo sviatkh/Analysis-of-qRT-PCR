@@ -1,0 +1,68 @@
+---
+title: "qRT-PCR analysis. Caffeteria diet"
+author: "Sviatoslav Kharuk"
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+        latex_engine: xelatex
+editor_options: 
+  chunk_output_type: inline
+---
+
+
+```{r setup}
+knitr::opts_knit$set(root.dir = '../01_qRT-PCR-2023-10-30-1set/')
+setwd('../01_qRT-PCR-2023-10-30-1set/')
+```
+
+```{r}
+#download libraries
+library(readxl)
+library(DescTools)
+library(ggplot2)
+
+```
+
+```{r}
+# download the data
+# set working directory
+data = read_xlsx("../01_qRT-PCR-2023-10-30-1set/")
+unique(data$Target)
+```
+
+```{r}
+# data reorder 
+data$Group <- factor(data$Group, levels = c("Control", "CD", "AKG", "CD + AKG"))
+```
+
+```{r}
+ggplot(data, aes(Target, Ct)) +  
+  geom_violin(position = position_dodge(width = .7), width = 2, aes(fill = Group), outlier.colour = NA, draw_quantiles = c(0.25, 0.5, 0.75)) + 
+  #geom_jitter(position = position_jitter(width = 1), alpha = 0.5) + 
+  labs(y = "Relative expression", x = " ") + 
+  ggtitle("qRT-PCR set 2. 2023-10-31") + 
+  theme_bw() + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  
+```
+
+```{r}
+# barplot 
+ggplot(data, aes(Target, Ct, fill = Group)) +
+  geom_bar(stat = "identity", position = "dodge") + 
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  
+```
+
+```{r}
+# duncan test for all genes
+genes <- unique(data$Target) 
+for (gene in genes) {   
+  gene_df <- subset(data, Target == gene)   
+  cM.aov <- aov(Ct ~ Group, data = gene_df)
+  print(gene)
+  print(PostHocTest(cM.aov, method = "duncan")) 
+  }
+
+```
