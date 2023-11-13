@@ -9,7 +9,9 @@ data <- read_excel("../Example_data.xlsx")
 # group by Target
 new_df <- data[order(data$Target), ]
 
-# sample the dataframe and create new column Group
+## sample the dataframe and create new column Group
+
+# fucntion to sample data
 sample_group <- function(s1, s2, s3, s4, group) {
   data.frame(
     sample_name = c(s1, s2, s3, s4),
@@ -17,32 +19,18 @@ sample_group <- function(s1, s2, s3, s4, group) {
   )
 }
 
-result <- sample_group(414, 415, 417, 418, "Control")
+sample_group_res_1 <- sample_group(414, 415, 417, 418, "Control") # how to manege the brackets? Does user 
+# need to write them?
 
-sample_group_1 <- data.frame(
-  sample_name = c("414", "415", "417", "418"),
-  group_name = "Control"
-)
+sample_group_res_2 <- sample_group(428, 430, 431, 432, "CD")
+sample_group_res_3 <- sample_group(483, 484, 485, 486, "AK")
+sample_group_res_4 <- sample_group(423, 424, 426, 427, "CDA")
 
-sample_group_2 <- data.frame(
-  sample_name = c("428", "430", "431", "432"),
-  group_name = "CD"
-)
+sample_group_df <- rbind(sample_group_res_1, 
+                      sample_group_res_2, 
+                      sample_group_res_3, 
+                      sample_group_res_4)
 
-sample_group_3 <- data.frame(
-  sample_name = c("483", "484", "485", "486"),
-  group_name = "AK"
-)
-
-sample_group_4 <- data.frame(
-  sample_name = c("423", "424", "426", "427"),
-  group_name = "CDA"
-)
-
-sample_group <- rbind(sample_group_1, sample_group_2, sample_group_3, sample_group_4)
-
-# I suppose that i have to write a function to sample the groups. So that the 
-# result of the sample can be used in another function 
 
 # new column with NA
 new_df$Group <- NA
