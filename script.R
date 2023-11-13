@@ -10,6 +10,14 @@ data <- read_excel("../Example_data.xlsx")
 new_df <- data[order(data$Target), ]
 
 # sample the dataframe and create new column Group
+sample_group <- function(s1, s2, s3, s4, group) {
+  data.frame(
+    sample_name = c(s1, s2, s3, s4),
+    group_name = group
+  )
+}
+
+result <- sample_group(414, 415, 417, 418, "Control")
 
 sample_group_1 <- data.frame(
   sample_name = c("414", "415", "417", "418"),
@@ -33,6 +41,8 @@ sample_group_4 <- data.frame(
 
 sample_group <- rbind(sample_group_1, sample_group_2, sample_group_3, sample_group_4)
 
+# I suppose that i have to write a function to sample the groups. So that the 
+# result of the sample can be used in another function 
 
 # new column with NA
 new_df$Group <- NA
