@@ -11,20 +11,20 @@ new_df <- data[order(data$Target), ]
 
 ## sample the dataframe and create new column Group
 
-# fucntion to sample data
-sample_group <- function(s1, s2, s3, s4, group) {
+# function to sample data
+sample_group <- function(group, ...) {
   data.frame(
-    sample_name = c(s1, s2, s3, s4),
-    group_name = group
+    sample_name = c(...),
+    group_name = rep(group, length(list(...)))
   )
 }
 
-sample_group_res_1 <- sample_group(414, 415, 417, 418, "Control") # how to manege the brackets? Does user 
+sample_group_res_1 <- sample_group("Control", 414, 415, 417, 418) # how to manage the brackets? Does user 
 # need to write them?
 
-sample_group_res_2 <- sample_group(428, 430, 431, 432, "CD")
-sample_group_res_3 <- sample_group(483, 484, 485, 486, "AK")
-sample_group_res_4 <- sample_group(423, 424, 426, 427, "CDA")
+sample_group_res_2 <- sample_group("CD", 428, 430, 431, 432)
+sample_group_res_3 <- sample_group("AK", 483, 484, 485, 486)
+sample_group_res_4 <- sample_group("CDA", 423, 424, 426, 427)
 
 sample_group_df <- rbind(sample_group_res_1, 
                       sample_group_res_2, 
@@ -42,9 +42,11 @@ for (i in 1:nrow(sample_group)) {
 
 
 # data reorder 
+
 new_df$Group <- factor(new_df$Group, levels = c("Control", "CD", "AK", "CDA"))
 
 unique(new_df$Target)
+
 
 ggplot(new_df, aes(Target, Ct)) +  
   geom_violin(position = position_dodge(width = .7), width = 2, aes(fill = Group), outlier.colour = NA, draw_quantiles = c(0.25, 0.5, 0.75)) + 
