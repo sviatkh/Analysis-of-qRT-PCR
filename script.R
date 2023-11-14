@@ -4,20 +4,14 @@ library(readxl)
 library(DescTools)
 library(ggplot2)
 
+source("functions.R")
+
 # data wrangling 
 data <- read_excel("../Example_data.xlsx")
 # group by Target
 new_df <- data[order(data$Target), ]
 
 ## sample the dataframe and create new column Group
-
-# function to sample data
-sample_group <- function(group, ...) {
-  data.frame(
-    sample_name = c(...),
-    group_name = rep(group, length(list(...)))
-  )
-}
 
 sample_group_res_1 <- sample_group("Control", 414, 415, 417, 418) # how to manage the brackets? Does user 
 # need to write them?
@@ -42,32 +36,18 @@ for (i in 1:nrow(sample_group_df)) {
 
 
 # data reorder
-reorder_group_on_graph <- function(...) {
-  levels <- c(...)
-  new_df$Group <- factor(new_df$Group, levels = levels)
-  return(new_df)
-}
-
 new_df <- reorder_group_on_graph("Control", "CD", "AK", "CDA") # I could check this later
-
 unique(new_df$Target)
 
 
+# plot violin on data
+plot_violin <- plot_violinplot(data)
 
-# function to plot violin on data
-plot_violinplot <- function(data) { # check if works
-  ggplot(data, aes(Target, Ct)) + 
-    geom_violin(position = position_dodge(width = .7), width = 2, aes(fill = Group), 
-                draw_quantiles = c(0.25, 0.5, 0.75)) + 
-    labs(y = "Relative expression", x = " ") + 
-    theme_bw() + 
-    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-  
-}
 
 # barplot 
 # here I have to find out how to add error bars in ggplot 
 plot_barplot <- function(data) { # check if works
+  
   ggplot(data, aes(Target, Ct, fill = Group)) +
     geom_bar(stat = "identity", position = "dodge") + 
     theme_bw() +
