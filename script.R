@@ -36,16 +36,22 @@ sample_group_df <- rbind(sample_group_res_1,
 new_df$Group <- NA
 
 # loop through Sample and write corresponding Group to Sample in new column
-for (i in 1:nrow(sample_group)) {
-  new_df$Group[new_df$Sample %in% sample_group$sample_name[i]] <- sample_group$group_name[i]
+for (i in 1:nrow(sample_group_df)) {
+  new_df$Group[new_df$Sample %in% sample_group_df$sample_name[i]] <- sample_group_df$group_name[i]
 }
 
 
-# data reorder 
+# data reorder
+reorder_group_on_graph <- function(...) {
+  levels <- c(...)
+  new_df$Group <- factor(new_df$Group, levels = levels)
+  return(new_df)
+}
 
-new_df$Group <- factor(new_df$Group, levels = c("Control", "CD", "AK", "CDA"))
+new_df <- reorder_group_on_graph("Control", "CD", "AK", "CDA") # I could check this later
 
 unique(new_df$Target)
+
 
 
 ggplot(new_df, aes(Target, Ct)) +  
