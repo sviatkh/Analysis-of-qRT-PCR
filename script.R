@@ -54,25 +54,30 @@ unique(new_df$Target)
 
 
 
-ggplot(new_df, aes(Target, Ct)) +  
-  geom_violin(position = position_dodge(width = .7), width = 2, aes(fill = Group), outlier.colour = NA, draw_quantiles = c(0.25, 0.5, 0.75)) + 
-  #geom_jitter(position = position_jitter(width = 1), alpha = 0.5) + 
-  labs(y = "Relative expression", x = " ") + 
-  ggtitle("qRT-PCR set 2. 2023-10-31") + 
-  theme_bw() + 
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+# function to plot violin on data
+plot_violinplot <- function(data) { # check if works
+  ggplot(data, aes(Target, Ct)) + 
+    geom_violin(position = position_dodge(width = .7), width = 2, aes(fill = Group), 
+                draw_quantiles = c(0.25, 0.5, 0.75)) + 
+    labs(y = "Relative expression", x = " ") + 
+    theme_bw() + 
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
   
-
-
+}
 
 # barplot 
-ggplot(data, aes(Target, Ct, fill = Group)) +
-  geom_bar(stat = "identity", position = "dodge") + 
-  theme_bw() +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+# here I have to find out how to add error bars in ggplot 
+plot_barplot <- function(data) { # check if works
+  ggplot(data, aes(Target, Ct, fill = Group)) +
+    geom_bar(stat = "identity", position = "dodge") + 
+    theme_bw() +
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+  }
+
   
 
-# duncan test for all genes
+# Duncan test for all genes
+# I have to rewrite the loop on new_df after calculating the delta Ct
 genes <- unique(data$Target) 
 for (gene in genes) {   
   gene_df <- subset(data, Target == gene)   
@@ -81,4 +86,4 @@ for (gene in genes) {
   print(PostHocTest(cM.aov, method = "duncan")) 
 }
 
-# after a have to calculate the delta Ct
+# after I have to calculate the delta Ct
