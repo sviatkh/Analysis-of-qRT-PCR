@@ -87,3 +87,5 @@ for (gene in genes) {
 }
 
 # after I have to calculate the delta Ct
+
+# create file functions and import them here
