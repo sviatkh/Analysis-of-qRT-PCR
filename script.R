@@ -4,6 +4,7 @@ library(readxl)
 library(DescTools)
 library(ggplot2)
 
+library(dplyr)
 source("functions.R")
 
 # data wrangling 
@@ -61,11 +62,20 @@ plot_barplot <- function(data) { # check if works
 genes <- unique(data$Target) 
 for (gene in genes) {   
   gene_df <- subset(data, Target == gene)   
-  cM.aov <- aov(Ct ~ Group, data = gene_df)
+  cM.aov <- aov(Ct ~ Group, data = new_df)
   print(gene)
   print(PostHocTest(cM.aov, method = "duncan")) 
 }
 
-# after I have to calculate the delta Ct
+## calculating delta Ct
+# I have to subtract the ct of every gene from RPL0
+rplp0_data <- new_df %>% filter(Target == "RPLP0")
 
-# create file functions and import them here
+# Merge the data frame with itself to get the Ct values for RPLP0 in the same row as other genes
+merged_df <- new_df %>%
+  left_join(rplp0_data, by = c("Sample", "Group"), suffix = c("", "RPLP0"))
+
+# Calculate delta Ct by subtracting the Ct values of RPLP0 from the corresponding Ct values of other genes
+delta_ct_df <- merged_df %>%
+  mutate(DeltaCt = Ct - CtRPLP0)
+
