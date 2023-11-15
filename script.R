@@ -95,8 +95,7 @@ control_mean <- control_data %>%
 delta_ct_df <- delta_ct_df %>%
   left_join(control_mean, by = "Target")
 
-# calculate delta-delta Ct
-
+## calculate delta-delta Ct
 # subtract the delta Ct of Target from mean for Control group 
 delta_ct_df <- delta_ct_df %>% 
   mutate(DeltaDeltaCt = DeltaCt - MeanDeltaCtControl)
