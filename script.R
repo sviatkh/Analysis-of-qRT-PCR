@@ -100,6 +100,11 @@ delta_ct_df <- delta_ct_df %>%
 delta_ct_df <- delta_ct_df %>% 
   mutate(DeltaDeltaCt = DeltaCt - MeanDeltaCtControl)
 
+## calculate the 2^-(ΔΔCt)
+
+delta_ct_df <- delta_ct_df %>%
+  mutate(RelativeFoldChange = 2^(-DeltaDeltaCt))
+
 
 
 
