@@ -77,6 +77,24 @@ merged_df <- new_df %>%
 
 # Calculate delta Ct by subtracting the Ct values of RPLP0 from the corresponding Ct values of other genes
 delta_ct_df <- merged_df %>%
-  mutate(DeltaCt = Ct - CtRPLP0)
+  mutate(DeltaCt = Ct - CtRPLP0) %>%
+  filter(Target != "RPLP0")
 
-# calculate mean Ct for controls 
+
+## calculate mean Ct for controls 
+# create df with control genes
+control_data <- delta_ct_df %>%
+  filter (Group == "Control")
+
+# calculate the mean for each gene in the control group
+control_mean <- control_data %>%
+  group_by(Target) %>% 
+  summarise(Mean_DeltaCt_Control = mean(DeltaCt, na.rm = TRUE))
+
+# Merge the mean values into original df
+delta_ct_df <- delta_ct_df %>%
+  left_join(control_mean, by = "Target")
+
+
+
+
