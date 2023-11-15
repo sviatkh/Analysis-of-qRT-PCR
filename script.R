@@ -79,3 +79,4 @@ merged_df <- new_df %>%
 delta_ct_df <- merged_df %>%
   mutate(DeltaCt = Ct - CtRPLP0)
 
+# calculate mean Ct for controls 
