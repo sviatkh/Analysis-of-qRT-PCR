@@ -89,11 +89,17 @@ control_data <- delta_ct_df %>%
 # calculate the mean for each gene in the control group
 control_mean <- control_data %>%
   group_by(Target) %>% 
-  summarise(Mean_DeltaCt_Control = mean(DeltaCt, na.rm = TRUE))
+  summarise(MeanDeltaCtControl = mean(DeltaCt, na.rm = TRUE))
 
 # Merge the mean values into original df
 delta_ct_df <- delta_ct_df %>%
   left_join(control_mean, by = "Target")
+
+# calculate delta-delta Ct
+
+# subtract the delta Ct of Target from mean for Control group 
+delta_ct_df <- delta_ct_df %>% 
+  mutate(DeltaDeltaCt = DeltaCt - MeanDeltaCtControl)
 
 
 
