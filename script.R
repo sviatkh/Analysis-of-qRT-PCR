@@ -55,17 +55,6 @@ plot_barplot <- function(data) { # check if works
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
   }
 
-  
-
-# Duncan test for all genes
-# I have to rewrite the loop on new_df after calculating the delta Ct
-genes <- unique(data$Target) 
-for (gene in genes) {   
-  gene_df <- subset(data, Target == gene)   
-  cM.aov <- aov(Ct ~ Group, data = new_df)
-  print(gene)
-  print(PostHocTest(cM.aov, method = "duncan")) 
-}
 
 ## calculating delta Ct
 # I have to subtract the ct of every gene from RPL0
@@ -101,10 +90,25 @@ delta_ct_df <- delta_ct_df %>%
   mutate(DeltaDeltaCt = DeltaCt - MeanDeltaCtControl)
 
 ## calculate the 2^-(ΔΔCt)
-
 delta_ct_df <- delta_ct_df %>%
   mutate(RelativeFoldChange = 2^(-DeltaDeltaCt))
 
+
+# Duncan test for all genes
+# I have to rewrite the loop on new_df after calculating the delta Ct
+
+# it does not work properly
+genes <- unique(delta_ct_df$Target) 
+for (gene in genes) {   
+  gene_df <- subset(delta_ct_df, Target == gene)   
+  cM.aov <- aov(RelativeFoldChange ~ Group, data = delta_ct_df)
+  print(gene)
+  print(PostHocTest(cM.aov, method = "duncan")) 
+}
+
+
+# plot violinplot
+plot_violin <- plot_violinplot(delta_ct_df)
 
 
 

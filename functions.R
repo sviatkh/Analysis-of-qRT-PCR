@@ -15,7 +15,7 @@ reorder_group_on_graph <- function(...) {
 
 # function to plot violin on data
 plot_violinplot <- function(data) { # check if works
-  ggplot(data, aes(Target, Ct)) + 
+  ggplot(data, aes(Target, RelativeFoldChange)) + 
     geom_violin(position = position_dodge(width = .7), width = 2, aes(fill = Group), 
                 draw_quantiles = c(0.25, 0.5, 0.75)) + 
     labs(y = "Relative expression", x = " ") + 
