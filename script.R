@@ -1,6 +1,6 @@
 
 #download libraries
-library(readxl)
+library(readxl) 
 library(DescTools)
 library(ggplot2)
 
@@ -41,10 +41,6 @@ new_df <- reorder_group_on_graph("Control", "CD", "AK", "CDA") # I could check t
 unique(new_df$Target)
 
 
-# plot violin on data
-plot_violin <- plot_violinplot(data)
-
-
 # barplot 
 # here I have to find out how to add error bars in ggplot 
 plot_barplot <- function(data) { # check if works
@@ -58,6 +54,7 @@ plot_barplot <- function(data) { # check if works
 
 ## calculating delta Ct
 # I have to subtract the ct of every gene from RPL0
+
 rplp0_data <- new_df %>% filter(Target == "RPLP0") # how to rewrite this on fucntion? Because control gene will be
 # received from User 
 

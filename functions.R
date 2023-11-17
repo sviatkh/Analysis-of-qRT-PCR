@@ -21,4 +21,25 @@ plot_violinplot <- function(data) { # check if works
     labs(y = "Relative expression", x = " ") + 
     theme_bw() + 
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-  }
+}
+
+# function to plot barplot
+
+plot_barplot <- function(data) { # check if works
+  
+  ggplot(data, aes(Target, Ct, fill = Group)) +
+    geom_bar(stat = "identity", position = "dodge") + 
+    theme_bw() +
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+}
+
+
+
+
+user_control <- function(example_control) {
+  new_df %>% filter(Target == example_control)
+}
+
+
+
+
