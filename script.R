@@ -48,10 +48,12 @@ rplp0_data <- user_control("RPLP0") # change RPLP0 to the control gene in your d
 
 
 # Merge the data frame with itself to get the Ct values for RPLP0 in the same row as other genes
+# I suppose that this one a have to rewrite as function
 merged_df <- new_df %>%
   left_join(rplp0_data, by = c("Sample", "Group"), suffix = c("", "RPLP0"))
 
 # Calculate delta Ct by subtracting the Ct values of RPLP0 from the corresponding Ct values of other genes
+# And this to write as function.
 delta_ct_df <- merged_df %>%
   mutate(DeltaCt = Ct - CtRPLP0) %>%
   filter(Target != "RPLP0")
