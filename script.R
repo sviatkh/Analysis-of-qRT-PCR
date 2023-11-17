@@ -37,7 +37,7 @@ for (i in 1:nrow(sample_group_df)) {
 
 
 # data reorder
-new_df <- reorder_group_on_graph("Control", "CD", "AK", "CDA") # I could check this later
+new_df <- reorder_group_on_graph("Control", "CD", "AK", "CDA") # I could check this later. And rewrite to the function if i will use the reordering
 unique(new_df$Target)
 
 
@@ -58,7 +58,10 @@ plot_barplot <- function(data) { # check if works
 
 ## calculating delta Ct
 # I have to subtract the ct of every gene from RPL0
-rplp0_data <- new_df %>% filter(Target == "RPLP0")
+rplp0_data <- new_df %>% filter(Target == "RPLP0") # how to rewrite this on fucntion? Because control gene will be
+# received from User 
+
+
 
 # Merge the data frame with itself to get the Ct values for RPLP0 in the same row as other genes
 merged_df <- new_df %>%
@@ -107,7 +110,7 @@ for (gene in genes) {
 }
 
 
-# plot violinplot
+# plot violinplot 
 plot_violin <- plot_violinplot(delta_ct_df)
 
 
