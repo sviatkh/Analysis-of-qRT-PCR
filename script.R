@@ -40,24 +40,11 @@ for (i in 1:nrow(sample_group_df)) {
 new_df <- reorder_group_on_graph("Control", "CD", "AK", "CDA") # I could check this later. And rewrite to the function if i will use the reordering
 unique(new_df$Target)
 
-
-# barplot 
-# here I have to find out how to add error bars in ggplot 
-plot_barplot <- function(data) { # check if works
-  
-  ggplot(data, aes(Target, Ct, fill = Group)) +
-    geom_bar(stat = "identity", position = "dodge") + 
-    theme_bw() +
-    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-  }
-
-
 ## calculating delta Ct
 # I have to subtract the ct of every gene from RPL0
 
-rplp0_data <- new_df %>% filter(Target == "RPLP0") # how to rewrite this on fucntion? Because control gene will be
-# received from User 
-
+# function to receive the Control gene name and process further
+rplp0_data <- user_control("RPLP0") # change RPLP0 to the control gene in your dataset
 
 
 # Merge the data frame with itself to get the Ct values for RPLP0 in the same row as other genes
@@ -110,6 +97,8 @@ for (gene in genes) {
 # plot violinplot 
 plot_violin <- plot_violinplot(delta_ct_df)
 
-
+# barplot 
+# here I have to find out how to add error bars in ggplot 
+plot_barplot <- plot_barplot(delta_ct_df) # check if works
 
 
