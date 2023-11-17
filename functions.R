@@ -27,7 +27,7 @@ plot_violinplot <- function(data) { # check if works
 
 plot_barplot <- function(data) { # check if works
   
-  ggplot(data, aes(Target, Ct, fill = Group)) +
+  ggplot(data, aes(Target, RelativeFoldChange, fill = Group)) +
     geom_bar(stat = "identity", position = "dodge") + 
     theme_bw() +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
