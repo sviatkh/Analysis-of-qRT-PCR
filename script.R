@@ -81,9 +81,7 @@ delta_ct_df <- delta_ct_df %>%
 
 
 # Duncan test for all genes
-# I have to rewrite the loop on new_df after calculating the delta Ct
-
-# it does not work properly
+# rewrite for function?
 genes <- unique(delta_ct_df$Target) 
 for (gene in genes) {   
   gene_df <- subset(delta_ct_df, Target == gene)   
@@ -91,6 +89,8 @@ for (gene in genes) {
   print(gene)
   print(PostHocTest(cM.aov, method = "duncan")) 
 }
+
+
 
 
 

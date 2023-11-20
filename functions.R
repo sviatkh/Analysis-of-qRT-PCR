@@ -6,12 +6,14 @@ sample_group <- function(group, ...) {
   )
 }
 
+
 # function to reorder the data 
 reorder_group_on_graph <- function(...) {
   levels <- c(...)
   new_df$Group <- factor(new_df$Group, levels = levels)
   return(new_df)
 }
+
 
 # function to plot violin on data
 plot_violinplot <- function(data) { # check if works
@@ -23,6 +25,7 @@ plot_violinplot <- function(data) { # check if works
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 }
 
+
 # function to plot barplot
 plot_barplot <- function(data) { # check if works
   
@@ -33,17 +36,18 @@ plot_barplot <- function(data) { # check if works
 }
 
 
-
 # function to receive the name of control gene for further processing of delta values
 user_control <- function(example_control) {
   new_df %>% filter(Target == example_control)
 }
+
 
 # function for merging the df
 merged_df_func <- function(user_control) {
   new_df %>% left_join(control_data, by = c("Sample", "Group"), suffix = c("", user_control))
 }
 
+# fucntion deltaCt calculation
 subtract_function <- function(user_control) {
   merged_df %>%
     mutate(DeltaCt = Ct - CtRPLP0) %>%
