@@ -44,4 +44,14 @@ merged_df_func <- function(user_control) {
   new_df %>% left_join(control_data, by = c("Sample", "Group"), suffix = c("", user_control))
 }
 
-
+subtract_function <- function(user_control) {
+  merged_df %>%
+    mutate(DeltaCt = Ct - CtRPLP0) %>%
+    filter(Target != user_control)
+}
+  
+  
+  
+  
+  
+  
