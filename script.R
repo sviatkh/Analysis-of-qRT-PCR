@@ -48,14 +48,13 @@ control_data <- user_control("RPLP0") # change RPLP0 to the control gene in your
 
 
 # Merge the data frame with itself to get the Ct values for RPLP0 in the same row as other genes
-# I suppose that this one a have to rewrite as function
-merged_df <- merged_df_func("RPLP0")
+merged_df <- merged_df_func("RPLP0") # receive from user
 
 
 # Calculate delta Ct by subtracting the Ct values of RPLP0 from the corresponding Ct values of other genes
-# And this to write as function.
-delta_ct_df <- subtract_function("RPLP0")
+delta_ct_df <- subtract_function("RPLP0") # receive from user
 
+# merge all this 3 function to one?
 
 ## calculate mean Ct for controls 
 # create df with control genes
@@ -88,10 +87,11 @@ delta_ct_df <- delta_ct_df %>%
 genes <- unique(delta_ct_df$Target) 
 for (gene in genes) {   
   gene_df <- subset(delta_ct_df, Target == gene)   
-  cM.aov <- aov(RelativeFoldChange ~ Group, data = delta_ct_df)
+  cM.aov <- aov(RelativeFoldChange ~ Group, data = gene_df)
   print(gene)
   print(PostHocTest(cM.aov, method = "duncan")) 
 }
+
 
 
 # plot violinplot 
