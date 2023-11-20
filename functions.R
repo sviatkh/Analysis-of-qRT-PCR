@@ -39,8 +39,9 @@ user_control <- function(example_control) {
   new_df %>% filter(Target == example_control)
 }
 
-
 # function for merging the df
-
+merged_df_func <- function(user_control) {
+  new_df %>% left_join(control_data, by = c("Sample", "Group"), suffix = c("", user_control))
+}
 
 
