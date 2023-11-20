@@ -34,11 +34,13 @@ plot_barplot <- function(data) { # check if works
 
 
 
-# function to receive the name of control gene for further procceseing of delta values
+# function to receive the name of control gene for further processing of delta values
 user_control <- function(example_control) {
   new_df %>% filter(Target == example_control)
 }
 
+
+# function for merging the df
 
 
 

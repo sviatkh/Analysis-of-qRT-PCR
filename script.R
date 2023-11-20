@@ -1,6 +1,6 @@
 
 #download libraries
-library(readxl) 
+library(readxl)
 library(DescTools)
 library(ggplot2)
 
@@ -44,13 +44,13 @@ unique(new_df$Target)
 # I have to subtract the ct of every gene from RPL0
 
 # function to receive the Control gene name and process further
-rplp0_data <- user_control("RPLP0") # change RPLP0 to the control gene in your dataset
+control_data <- user_control("RPLP0") # change RPLP0 to the control gene in your dataset
 
 
 # Merge the data frame with itself to get the Ct values for RPLP0 in the same row as other genes
-# I suppose that this one a have to rewrite as function
-merged_df <- new_df %>%
-  left_join(rplp0_data, by = c("Sample", "Group"), suffix = c("", "RPLP0"))
+
+merged_df_from_f <- merged_df_func("RPLP0")
+
 
 # Calculate delta Ct by subtracting the Ct values of RPLP0 from the corresponding Ct values of other genes
 # And this to write as function.
