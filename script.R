@@ -27,6 +27,9 @@ sample_group_df <- rbind(sample_group_res_1,
                       sample_group_res_4)
 
 
+# get the control gene name from the user
+control_gene_user_input <- ("RPLP0") 
+
 # new column with NA
 new_df$Group <- NA
 
