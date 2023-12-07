@@ -50,7 +50,7 @@ merged_df_func <- function(user_control) {
 # fucntion deltaCt calculation
 subtract_function <- function(user_control) {
   merged_df %>%
-    mutate(DeltaCt = Ct - CtRPL27) %>% # rewrite what i subtract of. Because of the problem i encouter. Or write the unique name for column? find out how to do this
+    mutate(DeltaCt = Ct - CtRPLP0) %>% # rewrite what i subtract of. Because of the problem i encouter. Or write the unique name for column? find out how to do this
     filter(Target != user_control)
 }
   

@@ -21,6 +21,7 @@ sample_group_res_2 <- sample_group("CD", 428, 430, 431, 432)
 sample_group_res_3 <- sample_group("AK", 483, 484, 485, 486)
 sample_group_res_4 <- sample_group("CDA", 423, 424, 426, 427)
 
+
 sample_group_df <- rbind(sample_group_res_1, 
                       sample_group_res_2, 
                       sample_group_res_3, 
@@ -47,15 +48,15 @@ unique(new_df$Target)
 # I have to subtract the ct of every gene from RPL0
 
 # function to receive the Control gene name and process further
-control_data <- user_control("RPLP0") # change RPLP0 to the control gene in your dataset
+control_data <- user_control(control_gene_user_input) # change RPLP0 to the control gene in your dataset
 
 
 # Merge the data frame with itself to get the Ct values for RPLP0 in the same row as other genes
-merged_df <- merged_df_func("RPLP0") # receive from user
+merged_df <- merged_df_func(control_gene_user_input) # receive from user
 
 
 # Calculate delta Ct by subtracting the Ct values of RPLP0 from the corresponding Ct values of other genes
-delta_ct_df <- subtract_function("RPLP0") # receive from user
+delta_ct_df <- subtract_function(control_gene_user_input) # receive from user
 
 # merge all this 3 function to one?
 
