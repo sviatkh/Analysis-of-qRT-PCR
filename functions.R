@@ -55,7 +55,12 @@ subtract_function <- function(user_control) {
 }
   
   
-  
-  
+subtract_function <- function(user_control) {
+  ct_control <- paste("Ct", user_control, sep = "")
+  merged_df %>%
+    mutate(DeltaCt = Ct - !!as.name(ct_control)) %>%
+    filter(Target != user_control)
+}
+
   
   
